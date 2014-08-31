@@ -1,0 +1,13 @@
+---
+# defaults file for workstation
+install_package_list:
+  - vim-common
+  - byobu
+  - python-pip
+
+install_pip_list:
+
+update_package_list:
+  - gmp
+
+byobu_line: '[ -r /home/ec2-user/byobu/prompt ] && . /home/ec2-user/.byobu/prompt   #byobu-prompt#'
