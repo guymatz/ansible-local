@@ -4,6 +4,7 @@ install_package_list:
   - vim-common
   - byobu
   - python-pip
+  - gitflow
 
 install_pip_list:
 
