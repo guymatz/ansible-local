@@ -5,6 +5,8 @@ install_package_list:
   - byobu
   - python-pip
   - gitflow
+  - strace
+  - mlocate
 
 install_pip_list:
 
