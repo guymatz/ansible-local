@@ -1,7 +1,16 @@
 ---
+- name: add ansible group
+  group: name=ansible state=present
+
+- name: Enable byobu in .bashrc files
+  lineinfile:
+    dest=/etc/sysconfig/network
+    line='HOSTNAME=localhost.localdomain'
+    regexp="^HOSTNAME=localhost.localdomain$"
+
 # tasks file for workstation
 - name: Create user gmatz
-  user: name=gmatz state=present
+  user: name=gmatz state=present groups=ansible
 
 - name: Set up authorized_keys for gmatz
   authorized_key: user=gmatz
@@ -33,7 +42,7 @@
     regexp="^set -o vi"
   with_nested:
     - [ 'root', 'gmatz' ]
-    - [ '.bash_profile' ,'.profile' ]
+    - [ '.bashrc',  '.bash_profile' ,'.profile' ]
 
 - name: Enable byobu in .rc files
   lineinfile:
