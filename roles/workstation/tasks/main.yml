@@ -1,4 +1,6 @@
 ---
+- name: set vi to be default editor
+  alternatives: name=editor path=/usr/bin/vi
 - name: add ansible group
   group: name=ansible state=present
 
@@ -21,7 +23,7 @@
     - public_keys/gmatz
 
 - include: Debian.yml
-  when: ansible_os_family in ['Debian', 'Ubuntu','Peppermint']
+  when: ansible_os_family in ['Debian', 'Ubuntu','Peppermint', 'Linuxmint']
 
 - include: Redhat.yml
   when: ansible_os_family in ['RedHat', 'Fedora','Centos']
