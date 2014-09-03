@@ -4,9 +4,16 @@ install_package_list:
   - vim-common
   - byobu
   - python-pip
-  - gitflow
   - strace
   - mlocate
+  - hipchat
+
+debian_package_list:
+  - git-flow
+  - aptitude
+
+redhat_package_list:
+  - gitflow
 
 install_pip_list:
 

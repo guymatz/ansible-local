@@ -2,11 +2,13 @@
 - name: add ansible group
   group: name=ansible state=present
 
-- name: Enable byobu in .bashrc files
-  lineinfile:
-    dest=/etc/sysconfig/network
-    line='HOSTNAME=localhost.localdomain'
-    regexp="^HOSTNAME=localhost.localdomain$"
+# TODO: Complete when I can find the name of the
+# Server based on an AWS tag
+##@#- name: Set Hostname
+##@#  lineinfile:
+##@#    dest=/etc/sysconfig/network
+##@#    line='HOSTNAME=localhost.localdomain'
+##@#    regexp="^HOSTNAME=localhost.localdomain$"
 
 # tasks file for workstation
 - name: Create user gmatz
@@ -18,20 +20,19 @@
   with_file:
     - public_keys/gmatz
 
-#- name: Update packages
-#  yum: name={{ item }} state=latest
-#  with_items: update_package_list
+- include: Debian.yml
+  when: ansible_os_family in ['Debian', 'Ubuntu','Peppermint']
 
-- name: Install packages
-  yum: name={{ item }} state=present
-  with_items: install_package_list
+- include: Redhat.yml
+  when: ansible_os_family in ['RedHat', 'Fedora','Centos']
 
 - name: Install PIP packages
   pip: name={{ item }} state=present
   with_items: install_pip_list
 
 - name: Install byobu launcher
-  remote_user: gmatz
+  sudo_user: gmatz
+  sudo: yes
   command: byobu-launcher-install
   changed_when: False
 
@@ -40,6 +41,7 @@
     dest=~{{ item[0] }}/{{ item[1] }}
     line="set -o vi"
     regexp="^set -o vi"
+    create=yes
   with_nested:
     - [ 'root', 'gmatz' ]
     - [ '.bashrc',  '.bash_profile' ,'.profile' ]
@@ -50,6 +52,7 @@
     line="_byobu_sourced=1 . /usr/bin/byobu-launch"
     regexp="_byobu_sourced=1"
     insertafter=EOF
+    create=yes
   with_nested:
     - [ 'root', 'gmatz' ]
     - [ '.bash_profile' ,'.profile' ]
@@ -60,3 +63,14 @@
     line='{{ byobu_line }}'
     regexp="byobu-prompt"
     insertafter=EOF
+    create=yes
+
+- name: Setup up git email
+  command: /usr/bin/git config --global user.email "gmatz@mdsol.com"
+  sudo_user: gmatz
+  changed_when: False
+
+- name: Setup up git email
+  command: /usr/bin/git config --global user.name "Guy Matz"
+  sudo_user: gmatz
+  changed_when: False
