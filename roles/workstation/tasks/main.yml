@@ -1,6 +1,4 @@
 ---
-- name: set vi to be default editor
-  alternatives: name=editor path=/usr/bin/vi
 - name: add ansible group
   group: name=ansible state=present
 
@@ -80,3 +78,8 @@
 - name: check out newest version of ansible
   git: repo=https://github.com/ansible/ansible.git
        dest=/opt/ansible
+
+- name: set alternatives
+  alternatives: name={{ item.cmd }} path={{ item.alt }}
+  with_items: alternatives
+  tags: now

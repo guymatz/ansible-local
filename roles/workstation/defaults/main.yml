@@ -12,6 +12,7 @@ install_package_list:
 debian_package_list:
   - git-flow
   - aptitude
+  - chromium-browser
 
 redhat_package_list:
   - gitflow
@@ -22,3 +23,8 @@ update_package_list:
   - gmp
 
 byobu_line: '[ -r /home/ec2-user/byobu/prompt ] && . /home/ec2-user/.byobu/prompt   #byobu-prompt#'
+
+alternatives:
+  - {cmd: 'editor', alt: '/usr/bin/vi'}
+  - {cmd: 'gnome-www-browser', alt: '/usr/bin/chromium-browser'}
+  - {cmd: 'x-www-browser', alt: '/usr/bin/chromium-browser'}
