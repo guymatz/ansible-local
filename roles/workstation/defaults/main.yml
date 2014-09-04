@@ -8,14 +8,24 @@ install_package_list:
   - strace
   - mlocate
   - hipchat
+  - grive
+
+install_x_package_list:
+  - vim-gnome
+  - vim-gui-common
+  - vim-gtk
 
 debian_package_list:
   - git-flow
   - aptitude
+
+debian_x_package_list:
   - chromium-browser
 
 redhat_package_list:
   - gitflow
+
+redhat_x_package_list:
 
 install_pip_list:
 
