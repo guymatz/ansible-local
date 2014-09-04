@@ -7,15 +7,37 @@
   apt_key: url='https://www.hipchat.com/keys/hipchat-linux.key' state=present
 
 - name: Update packages
-  apt: update_cache=yes
+  apt: update_cache=yes cache_valid_time=86400
+  register: cache_updated
 
-- name: Install packages
+- name: Install Common packages
   apt: name={{ item }} state=present
   with_items: install_package_list
+ 
+- name: Check for X
+  command: dpkg -s x11-common
+  failed_when: False
+  changed_when: False
+  register: xoutput
+
+- name: Install Debian X packages
+  apt: name={{ item }} state=present
+  with_items: debian_x_package_list
+  when: xoutput|success 
 
 - name: Install uniquely-named packages
   apt: name={{ item }} state=present
   with_items: debian_package_list
 
-- name: Update packages
+- name: Upgrade packages
   apt: upgrade=safe
+  when: cache_updated|changed
+
+- name: Download Sublime Text 3
+  get_url: url=http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_amd64.deb
+           dest=/var/cache/apt/archives/sublime-text_build-3065_amd64.deb
+  when: xoutput|success 
+
+- name: Install Sublime Text 3
+  apt: deb=/var/cache/apt/archives/sublime-text_build-3065_amd64.deb
+  when: xoutput|success 
