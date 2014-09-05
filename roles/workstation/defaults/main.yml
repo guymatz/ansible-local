@@ -14,6 +14,7 @@ install_x_package_list:
   - vim-gnome
   - vim-gui-common
   - vim-gtk
+  - shutter
 
 debian_package_list:
   - git-flow
@@ -21,6 +22,7 @@ debian_package_list:
 
 debian_x_package_list:
   - chromium-browser
+  - adobe-flashplugin
 
 redhat_package_list:
   - gitflow
