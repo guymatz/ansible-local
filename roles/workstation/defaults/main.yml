@@ -2,19 +2,18 @@
 # defaults file for workstation
 install_package_list:
   - vim-common
-  - gnome-terminal
   - byobu
   - python-pip
   - strace
   - mlocate
-  - hipchat
-  - grive
+#  - grive
 
 install_x_package_list:
   - vim-gnome
   - vim-gui-common
   - vim-gtk
   - shutter
+  - hipchat
 
 debian_package_list:
   - git-flow
@@ -23,11 +22,13 @@ debian_package_list:
 debian_x_package_list:
   - chromium-browser
   - adobe-flashplugin
+  - mate-terminal
 
 redhat_package_list:
   - gitflow
 
 redhat_x_package_list:
+  - gnome-terminal
 
 install_pip_list:
 
@@ -37,6 +38,9 @@ update_package_list:
 byobu_line: '[ -r /home/ec2-user/byobu/prompt ] && . /home/ec2-user/.byobu/prompt   #byobu-prompt#'
 
 alternatives:
+  -
+
+debian_alternatives:
   - {cmd: 'editor', alt: '/usr/bin/vi'}
   - {cmd: 'gnome-www-browser', alt: '/usr/bin/chromium-browser'}
   - {cmd: 'x-www-browser', alt: '/usr/bin/chromium-browser'}
