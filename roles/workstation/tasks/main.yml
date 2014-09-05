@@ -79,7 +79,6 @@
   git: repo=https://github.com/ansible/ansible.git
        dest=/opt/ansible
 
-- name: set alternatives
-  alternatives: name={{ item.cmd }} path={{ item.alt }}
-  with_items: alternatives
-  tags: now
+#- name: set common alternatives
+#  alternatives: name={{ item.cmd }} path={{ item.alt }}
+#  with_items: alternatives

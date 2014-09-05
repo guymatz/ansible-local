@@ -41,3 +41,7 @@
 - name: Install Sublime Text 3
   apt: deb=/var/cache/apt/archives/sublime-text_build-3065_amd64.deb
   when: xoutput|success 
+
+- name: set Debian alternatives
+  alternatives: name={{ item.cmd }} path={{ item.alt }}
+  with_items: debian_alternatives
