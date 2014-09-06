@@ -24,10 +24,21 @@ debian_x_package_list:
 
 redhat_package_list:
   - gitflow
+  - xz-libs
+  - zlib-devel
+  - openssl-devel
+  - sqlite-devel
+  - bzip2-devel
 
 redhat_x_package_list:
 
 install_pip_list:
+
+debian_pip_list:
+
+redhat_pip_list:
+  - ipcluster_tools
+  - ipython-cluster-helper
 
 update_package_list:
   - gmp
