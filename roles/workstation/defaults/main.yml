@@ -12,8 +12,8 @@ install_x_package_list:
   - vim-gnome
   - vim-gui-common
   - vim-gtk
+  - shutter
   - hipchat
-  - gnome-terminal
 
 debian_package_list:
   - git-flow
@@ -21,6 +21,8 @@ debian_package_list:
 
 debian_x_package_list:
   - chromium-browser
+  - adobe-flashplugin
+  - mate-terminal
 
 redhat_package_list:
   - gitflow
@@ -31,6 +33,7 @@ redhat_package_list:
   - bzip2-devel
 
 redhat_x_package_list:
+  - gnome-terminal
 
 install_pip_list:
 
