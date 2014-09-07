@@ -2,6 +2,20 @@
 - name: Add HipChat repo
   copy: src=hipchat.repo dest=/etc/yum.repos.d/hipchat.repo
 
+- name: Add RepoForge repo key
+  command: rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt creates=/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag
+  register: repoforge_key
+
+- name: Add RepoForge repo
+  yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+  when: repoforge_key|changed
+
+- name: Add rpmfusino-free repo
+  yum: name=http://download1.rpmfusion.org/free/el/updates/6/i386/rpmfusion-free-release-6-1.noarch.rpm
+
+- name: Add rpmfusion-nonfree repo
+  yum: name=http://download1.rpmfusion.org/nonfree/el/updates/6/i386/rpmfusion-nonfree-release-6-1.noarch.rpm
+
 #- name: Update packages
 #  yum: name={{ item }} state=latest
 #  with_items: update_package_list
@@ -13,35 +27,14 @@
   yum: name={{ item }} state=present
   with_items: redhat_package_list
 
-- name: Download Python 2.7
-  get_url: url='http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz' dest=/usr/local/src
-  register: download_py
-
-- name: Unarchive Python27
-  unarchive: src=/usr/local/src/Python-2.7.6.tar.xz dest=/usr/local/src creates=/usr/local/src/Python-2.7.6 
-  when: download_py|success
-
-- name: Make and Install Python27
-  command: "{{ item }}"
-  args:
-    chdir: /usr/local/src/Python-2.7.6
-    creates: /usr/local/bin/python2.7
-  with_items:
-    - ./configure --prefix=/usr/local
-    - make
-    - make altinstall
-  when: download_py|success
-  register: install_python
-
 - name: Download pip27
   get_url: url=https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py dest=/usr/local/src/get-pip.py
   register: downpip27
-  when: install_python|changed
 
 - name: Install pip27
-  command: /usr/local/bin/python2.7 /usr/local/src/get-pip.py
+  command: /usr/bin/python2.7 /usr/local/src/get-pip.py
   when: downpip27|changed
 
 - name: Install Redhat PIPs
-  pip: name={{ item }} state=present executable=/usr/local/bin/pip2.7
+  pip: name={{ item }} state=present executable=/usr/bin/pip2.7
   with_items: redhat_pip_list

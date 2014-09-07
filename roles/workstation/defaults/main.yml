@@ -26,11 +26,18 @@ debian_x_package_list:
 
 redhat_package_list:
   - gitflow
-  - xz-libs
-  - zlib-devel
+  - python27
+  - python27-libs
+  - python27-devel
+  - python27-tools
+  - json-c
+  - json-c-devel
+  - boost-devel
   - openssl-devel
-  - sqlite-devel
-  - bzip2-devel
+  - libxslt
+  - libcurl
+  - libcurl-devel
+  - http://dl.dropboxusercontent.com/u/12455712/grive-0.3.0-1.el6.xz.x86_64.rpm
 
 redhat_x_package_list:
   - gnome-terminal
