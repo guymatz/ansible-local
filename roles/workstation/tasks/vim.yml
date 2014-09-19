@@ -18,9 +18,9 @@
   sudo_user: gmatz
 
 - name: VIM plugin install via git
-  git: repo={{ item }} dest=~/.vim/bundle
+  git: repo={{ item.value.url }} dest=~/.vim/bundle/{{ item.key }}
   sudo_user: gmatz
-  with_items:  vim_plugin_git_urls
+  with_dict:  vim_plugin_git_urls
 
 ##@#- name: VIM plugin install via pathogen
 ##@#  get_url: url={{ item }} dest=~/.vim/autoload/pathogen.vim 

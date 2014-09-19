@@ -100,14 +100,6 @@
 #  file: path=~/.vim state=directory recurse=yes
 #        owner=gmatz group=gmatz
 
-- name: VIM plugins setup
-  sudo_user: gmatz
-  file: path=~/.vim/{{ item }} state=directory recurse=yes
-        owner=gmatz group=gmatz
-  with_items:
-    - autoload
-    - bundle
-
 - include: vim.yml
 
 - include: virtual.yml
