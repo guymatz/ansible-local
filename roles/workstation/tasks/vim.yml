@@ -1,0 +1,28 @@
+---
+
+- name: vimrc
+  copy: src=.vimrc dest=~
+        owner=gmatz group=gmatz
+  sudo_user: gmatz
+
+- name: VIM plugins setup
+  sudo_user: gmatz
+  file: path=~/.vim/{{ item }} state=directory recurse=yes
+        owner=gmatz group=gmatz
+  with_items:
+    - autoload
+    - bundle
+
+- name: VIM Pathogen install
+  get_url: url=https://tpo.pe/pathogen.vim dest=~/.vim/autoload/pathogen.vim 
+  sudo_user: gmatz
+
+- name: VIM plugin install via git
+  git: repo={{ item }} dest=~/.vim/bundle
+  sudo_user: gmatz
+  with_items:  vim_plugin_git_urls
+
+##@#- name: VIM plugin install via pathogen
+##@#  get_url: url={{ item }} dest=~/.vim/autoload/pathogen.vim 
+##@#  sudo_user: gmatz
+##@#  with_items:  plugin_urls

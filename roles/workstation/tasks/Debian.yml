@@ -10,12 +10,21 @@
   apt: update_cache=yes cache_valid_time=86400
   register: cache_updated
 
+##@#- name: Add PPAs
+##@#  apt_repository: repo='{{ item }}' state=present
+##@#  with_items: debian_ppa_install
+##@#  register: debian_ppa
+
+##@#- name: Update apt if necessary
+##@#  apt: update_cache=yes
+##@#  when: debian_ppa|changed
+
 - name: Install Common packages
   apt: name={{ item }} state=present
   with_items: install_package_list
 
 - name: Install Common X packages
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present force=yes
   with_items: install_x_package_list
  
 - name: Check for X
@@ -25,12 +34,12 @@
   register: xoutput
 
 - name: Install Debian X packages
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present force=yes
   with_items: debian_x_package_list
   when: xoutput|success 
 
 - name: Install uniquely-named packages
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present force=yes
   with_items: debian_package_list
 
 - name: Upgrade packages

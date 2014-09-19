@@ -62,3 +62,6 @@ debian_alternatives:
   - {cmd: 'editor', alt: '/usr/bin/vi'}
   - {cmd: 'gnome-www-browser', alt: '/usr/bin/chromium-browser'}
   - {cmd: 'x-www-browser', alt: '/usr/bin/chromium-browser'}
+
+vim_plugin_git_urls:
+  - https://github.com/scrooloose/nerdtree.git
