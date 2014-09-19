@@ -8,6 +8,13 @@ install_package_list:
   - mlocate
 #  - grive
 
+virt_packages:
+  - linux-generic
+  - virtualbox-dkms
+  - virtualbox
+  - virtualbox-qt
+  - vagrant
+
 install_x_package_list:
   - vim-gtk
   - shutter
