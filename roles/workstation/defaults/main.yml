@@ -9,8 +9,6 @@ install_package_list:
 #  - grive
 
 install_x_package_list:
-  - vim-gnome
-  - vim-gui-common
   - vim-gtk
   - shutter
   - hipchat
