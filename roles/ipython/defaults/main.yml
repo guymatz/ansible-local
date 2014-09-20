@@ -1,0 +1,40 @@
+---
+# defaults file for workstation
+install_package_list:
+
+install_x_package_list:
+  -
+
+debian_package_list:
+  -
+
+debian_x_package_list:
+  -
+
+redhat_package_list:
+  - python27
+  - python27-libs
+  - python27-devel
+  - python27-tools
+
+redhat_x_package_list:
+  -
+
+install_pip_list:
+  - ipcluster_tools
+  - ipython-cluster-helper
+
+debian_pip_list:
+  -
+
+redhat_pip_list:
+  -
+
+update_package_list:
+  -
+
+alternatives:
+  -
+
+debian_alternatives:
+  -

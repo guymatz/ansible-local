@@ -1,5 +1,3 @@
 ---
-- hosts: localhost
-  sudo: True
-  roles:
-    - workstation
+- include: local.yml
+- include: ipython.yml
