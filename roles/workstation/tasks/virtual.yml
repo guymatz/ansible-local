@@ -1,0 +1,32 @@
+---
+
+- name: Install virtualbox and friends on metal
+  apt: name={{ item }} state=present
+  with_items: virt_packages
+  register: vbox_install
+  notify: start vbox
+
+- name: Get VBox version for installing extension pack
+  command: /usr/bin/VBoxManage --version
+  register: vbox_ver
+  when: vbox_install|changed
+  changed_when: False
+
+- name: Set major/minor number of vbox release
+  set_fact: 
+    vbox_ver_maj: "{{ vbox_ver.stdout | regex_replace('^(.*)_.*$','\\\\1') }}"
+    vbox_ver_min: "{{ vbox_ver.stdout | regex_replace('^.*_.*r([0-9]*)$','\\\\1') }}"
+  changed_when: False
+  when: vbox_install|changed
+
+- name: Set filename of vbox release
+  set_fact: 
+    vbox_ext_file: Oracle_VM_VirtualBox_Extension_Pack-{{ vbox_ver_maj }}-{{ vbox_ver_min  }}.vbox-extpack
+
+- name: Grab ext pack
+  get_url: url='http://download.virtualbox.org/virtualbox/{{ vbox_ver_maj }}/{{ vbox_ext_file }}' dest=/var/tmp/{{ vbox_ext_file }}
+  when: vbox_install|changed
+
+- name: Setup vbox extension pack
+  command: /usr/bin/VBoxManage extpack install /var/tmp/Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
+  when: vbox_install|changed

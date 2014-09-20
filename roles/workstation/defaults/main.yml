@@ -9,9 +9,14 @@ install_package_list:
   - dos2unix
 #  - grive
 
+virt_packages:
+  - linux-generic
+  - virtualbox-dkms
+  - virtualbox
+  - virtualbox-qt
+  - vagrant
+
 install_x_package_list:
-  - vim-gnome
-  - vim-gui-common
   - vim-gtk
   - shutter
   - hipchat
@@ -61,3 +66,7 @@ debian_alternatives:
   - {cmd: 'editor', alt: '/usr/bin/vi'}
   - {cmd: 'gnome-www-browser', alt: '/usr/bin/chromium-browser'}
   - {cmd: 'x-www-browser', alt: '/usr/bin/chromium-browser'}
+
+vim_plugin_git_urls:
+        nerdtree:
+                url:  https://github.com/scrooloose/nerdtree.git

@@ -1,2 +1,4 @@
 ---
 # handlers file for workstation
+- name: start vbox
+  service: name=virtualbox state=start

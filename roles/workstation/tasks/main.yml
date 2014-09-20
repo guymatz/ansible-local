@@ -1,4 +1,16 @@
 ---
+- name: Check if we're at work
+  command:  grep mdsol /etc/resolv.conf
+  changed_when: False
+  register: at_work
+
+- name: Set work
+  set_fact: at_work=True
+  changed_when: False
+  when: at_work
+
+#- debug: msg='at_work {{ at_work|to_nice_json }}'
+
 - name: add ansible group
   group: name=ansible state=present
 
@@ -12,13 +24,17 @@
 
 # tasks file for workstation
 - name: Create user gmatz
-  user: name=gmatz state=present groups=ansible
+  user: name=gmatz state=present groups=ansible,sudo
 
 - name: Set up authorized_keys for gmatz
   authorized_key: user=gmatz
                   key="{{ item }}"
   with_file:
     - public_keys/gmatz
+
+- name: configure ssh
+  copy: src=config dest=~/.ssh/config
+  sudo_user: gmatz
 
 - include: Debian.yml
   when: ansible_os_family in ['Debian', 'Ubuntu','Peppermint', 'Linuxmint']
@@ -75,10 +91,16 @@
   sudo_user: gmatz
   changed_when: False
 
-- name: check out newest version of ansible
-  git: repo=https://github.com/ansible/ansible.git
-       dest=/opt/ansible
-
 #- name: set common alternatives
 #  alternatives: name={{ item.cmd }} path={{ item.alt }}
 #  with_items: alternatives
+
+#- name: VIM dir
+#  sudo_user: gmatz
+#  file: path=~/.vim state=directory recurse=yes
+#        owner=gmatz group=gmatz
+
+- include: vim.yml
+
+- include: virtual.yml
+  when: ansible_virtualization_role == 'host'
