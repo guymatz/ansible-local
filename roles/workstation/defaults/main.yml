@@ -28,6 +28,7 @@ debian_x_package_list:
   - chromium-browser
   - adobe-flashplugin
   - mate-terminal
+  - pepperflashplugin-nonfree
 
 redhat_package_list:
   - gitflow
@@ -71,3 +72,7 @@ debian_alternatives:
 vim_plugin_git_urls:
         nerdtree:
                 url:  https://github.com/scrooloose/nerdtree.git
+        fugitive:
+                url: git://github.com/tpope/vim-fugitive.git
+        vim-colors-solarized:
+                url: git://github.com/altercation/vim-colors-solarized.git
