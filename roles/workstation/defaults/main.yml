@@ -6,6 +6,7 @@ install_package_list:
   - python-pip
   - strace
   - mlocate
+  - dos2unix
 #  - grive
 
 virt_packages:
@@ -53,8 +54,6 @@ install_pip_list:
 debian_pip_list:
 
 redhat_pip_list:
-  - ipcluster_tools
-  - ipython-cluster-helper
 
 update_package_list:
   - gmp

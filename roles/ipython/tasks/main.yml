@@ -1,0 +1,26 @@
+---
+
+# tasks file for ipython
+# TODO Does this need a special user?
+#- name: Create user gmatz
+#  user: name=gmatz state=present groups=ansible
+#
+#- name: Set up authorized_keys for gmatz
+#  authorized_key: user=gmatz
+#                  key="{{ item }}"
+#  with_file:
+#    - public_keys/gmatz
+
+- include: Debian.yml
+  when: ansible_os_family in ['Debian', 'Ubuntu','Peppermint', 'Linuxmint']
+
+- include: Redhat.yml
+  when: ansible_os_family in ['RedHat', 'Fedora','Centos']
+
+- name: Install PIP packages
+  pip: name={{ item }} state=present executable=pip2.7
+  with_items: install_pip_list
+
+#- name: set common alternatives
+#  alternatives: name={{ item.cmd }} path={{ item.alt }}
+#  with_items: alternatives

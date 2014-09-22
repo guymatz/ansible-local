@@ -1,0 +1,29 @@
+---
+
+- name: Install Common packages
+  apt: name={{ item }} state=present
+  with_items: install_package_list
+ 
+- name: Check for X
+  command: dpkg -s x11-common
+  failed_when: False
+  changed_when: False
+  register: xoutput
+
+- name: Install Common X packages
+  apt: name={{ item }} state=present
+  with_items: install_x_package_list
+  when: xoutput|success 
+
+- name: Install Debian X packages
+  apt: name={{ item }} state=present
+  with_items: debian_x_package_list
+  when: xoutput|success 
+
+- name: Install uniquely-named packages
+  apt: name={{ item }} state=present
+  with_items: debian_package_list
+
+- name: set Debian alternatives
+  alternatives: name={{ item.cmd }} path={{ item.alt }}
+  with_items: debian_alternatives

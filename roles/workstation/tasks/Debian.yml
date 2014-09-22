@@ -23,15 +23,16 @@
   apt: name={{ item }} state=present
   with_items: install_package_list
 
-- name: Install Common X packages
-  apt: name={{ item }} state=present force=yes
-  with_items: install_x_package_list
- 
 - name: Check for X
   command: dpkg -s x11-common
   failed_when: False
   changed_when: False
   register: xoutput
+
+- name: Install Common X packages
+  apt: name={{ item }} state=present
+  with_items: install_x_package_list
+  when: xoutput|success 
 
 - name: Install Debian X packages
   apt: name={{ item }} state=present force=yes
