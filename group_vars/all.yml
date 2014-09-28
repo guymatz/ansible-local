@@ -1,0 +1,7 @@
+ami_id: ami-7d4d0e4d
+vpc_id: vpc-62ce0307
+vpc_subnet_id: subnet-fd7ca598
+region: us-west-2
+instance_type: t1.micro
+keypair: chromebook
+group_name: cluster1

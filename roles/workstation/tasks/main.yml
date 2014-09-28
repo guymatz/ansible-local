@@ -1,7 +1,15 @@
 ---
+- include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_os_family }}.yml'     # Debian
+        - 'default.yml'
+      paths: '../vars'
+
 - name: Check if we're at work
   command:  grep mdsol /etc/resolv.conf
   changed_when: False
+  failed_when: False
   register: at_work
 
 - name: Set work
@@ -11,8 +19,8 @@
 
 #- debug: msg='at_work {{ at_work|to_nice_json }}'
 
-- name: add ansible group
-  group: name=ansible state=present
+#- name: add ansible group
+#  group: name=ansible state=present
 
 # TODO: Complete when I can find the name of the
 # Server based on an AWS tag
@@ -24,7 +32,16 @@
 
 # tasks file for workstation
 - name: Create user gmatz
-  user: name=gmatz state=present groups=ansible,sudo
+  user: name=gmatz state=present groups={{ sudo_group }}
+
+- name: Uncomment wheel line in sudo file on RedHat
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%wheel.*NOPASSWD.*' line='%wheel ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
+  when: ansible_os_family == 'RedHat'
+
+
+- name: Uncomment wheel line in sudo file on Debian
+  lineinfile: "dest=/etc/sudoers state=present regexp='%sudo   ALL=(ALL:ALL) ALL' line='%sudo ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
+  when: ansible_os_family == 'Debian'
 
 - name: Set up authorized_keys for gmatz
   authorized_key: user=gmatz
@@ -33,7 +50,7 @@
     - public_keys/gmatz
 
 - name: configure ssh
-  copy: src=config dest=~/.ssh/config
+  copy: src=config dest=~/.ssh/config mode=0600
   sudo_user: gmatz
 
 - include: Debian.yml

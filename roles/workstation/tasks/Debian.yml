@@ -1,10 +1,7 @@
 ---
 
-- name: Add HipChat repo
-  apt_repository: repo='deb http://downloads.hipchat.com/linux/apt stable main' state=present
-
-- name: Add HipChat repo key
-  apt_key: url='https://www.hipchat.com/keys/hipchat-linux.key' state=present
+- name: add gmatz to sudo group
+  user: name='gmatz' groups='sudo' append=yes
 
 - name: Update packages
   apt: update_cache=yes cache_valid_time=86400
@@ -39,6 +36,14 @@
   with_items: debian_x_package_list
   when: xoutput|success 
 
+- name: Add HipChat repo
+  apt_repository: repo='deb http://downloads.hipchat.com/linux/apt stable main' state=present
+  when: xoutput|success 
+
+- name: Add HipChat repo key
+  apt_key: url='https://www.hipchat.com/keys/hipchat-linux.key' state=present
+  when: xoutput|success 
+
 - name: Install uniquely-named packages
   apt: name={{ item }} state=present force=yes
   with_items: debian_package_list
@@ -59,3 +64,8 @@
 - name: set Debian alternatives
   alternatives: name={{ item.cmd }} path={{ item.alt }}
   with_items: debian_alternatives
+
+- name: set Debian X alternatives
+  alternatives: name={{ item.cmd }} path={{ item.alt }}
+  when: xoutput|success 
+  with_items: debian_x_alternatives

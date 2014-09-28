@@ -65,13 +65,7 @@ alternatives:
 
 debian_alternatives:
   - {cmd: 'editor', alt: '/usr/bin/vi'}
+
+debian_x_alternatives:
   - {cmd: 'gnome-www-browser', alt: '/usr/bin/chromium-browser'}
   - {cmd: 'x-www-browser', alt: '/usr/bin/chromium-browser'}
-
-vim_plugin_git_urls:
-        nerdtree:
-                url:  https://github.com/scrooloose/nerdtree.git
-        fugitive:
-                url: git://github.com/tpope/vim-fugitive.git
-        vim-colors-solarized:
-                url: git://github.com/altercation/vim-colors-solarized.git

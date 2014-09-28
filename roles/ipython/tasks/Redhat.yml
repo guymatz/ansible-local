@@ -1,8 +1,14 @@
 ---
 
+- debug: msg={{ install_package_list|length > 0 }}
+
+- debug: msg={{ install_package_list }}
+
 - name: Install common packages
   yum: name={{ item }} state=present
   with_items: install_package_list
+  tags: ipython
+  when: install_package_list|length > 0
 
 #- name: Update packages
 #  yum: name={{ item }} state=latest
@@ -11,11 +17,14 @@
 - name: Install Redhat packages
   yum: name={{ item }} state=present
   with_items: redhat_package_list
+  tags: ipython
 
 - name: Download pip27
   get_url: url=https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py dest=/usr/local/src/get-pip.py
   register: downpip27
+  tags: ipython
 
 - name: Install pip27
   command: /usr/bin/python2.7 /usr/local/src/get-pip.py
   when: downpip27|changed
+  tags: ipython

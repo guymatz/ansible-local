@@ -1,0 +1,11 @@
+---
+
+- hosts: ubuntu_workstations
+  sudo: True
+  roles:
+    - workstation
+
+- hosts: localhost
+  sudo: True
+  roles:
+    - workstation
