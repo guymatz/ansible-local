@@ -1,9 +1,21 @@
-[ipy_controllers]
+[redhat_workstations]
 desktop
 
+[ipy_controllers]
+ipyc1
+
 [ipy_engines]
-ipython01
-ipython02
+ipye1
+ipye2
+
+[ipy:children]
+ipy_controllers
+ipy_engines
 
 [ubuntu_workstations]
 ubuntu ansible_ssh_private_key_file=/home/gmatz/.ssh/newkey.pem
+
+[workstations:children]
+ubuntu_workstations
+redhat_workstations
+ipy
