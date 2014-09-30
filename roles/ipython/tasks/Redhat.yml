@@ -1,14 +1,14 @@
 ---
 
-- debug: msg={{ install_package_list|length > 0 }}
-
 - debug: msg={{ install_package_list }}
+
+- debug: msg={{ install_package_list|length > 1 }}
 
 - name: Install common packages
   yum: name={{ item }} state=present
   with_items: install_package_list
   tags: ipython
-  when: install_package_list|length > 0
+  when: install_package_list|length > 1
 
 #- name: Update packages
 #  yum: name={{ item }} state=latest

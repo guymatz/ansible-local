@@ -1,6 +1,6 @@
 ---
 - name: Install IPython
-  hosts: [ 'ipy*', 'tag_ipython*' ]
+  hosts: ipy
   sudo: True
   roles:
     - workstation

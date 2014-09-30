@@ -69,3 +69,28 @@ debian_alternatives:
 debian_x_alternatives:
   - {cmd: 'gnome-www-browser', alt: '/usr/bin/chromium-browser'}
   - {cmd: 'x-www-browser', alt: '/usr/bin/chromium-browser'}
+
+
+vim_plugin_git_urls:
+    nerdtree:
+        url:  https://github.com/scrooloose/nerdtree.git
+    fugitive:
+        url: git://github.com/tpope/vim-fugitive.git
+    vim-colors-solarized:
+        url: git://github.com/altercation/vim-colors-solarized.git
+
+vim_color_urls:
+    grb256:
+        url: https://github.com/garybernhardt/dotfiles/blob/master/.vim/colors/grb256.vim
+    guardian:
+        url: http://www.vim.org/scripts/download_script.php?src_id=4128
+    distinguished:
+        url: https://github.com/Lokaltog/vim-distinguished/raw/develop/colors/distinguished.vim
+    github:
+        url: http://www.vim.org/scripts/download_script.php?src_id=12456
+    jellybeans:
+        url: https://github.com/nanotech/jellybeans.vim/raw/master/colors/jellybeans.vim
+    vividchalk:
+        url: https://github.com/tpope/vim-vividchalk/raw/master/colors/vividchalk.vim
+    candy:
+        url: http://www.vim.org/scripts/download_script.php?src_id=817
