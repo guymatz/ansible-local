@@ -55,6 +55,7 @@
         group: '{{ group_name }}'
         instance_type: '{{ instance_type }}'
         image: '{{ ami_id }}'
+        assign_public_ip: true
         count: 2
         wait: yes
       register: ec2
@@ -69,7 +70,7 @@
       args:
         tags:
           Name: ipye
-          ipython: engine
+          ipy_type: engine
 
 
     - name: Wait for SSH to be available
