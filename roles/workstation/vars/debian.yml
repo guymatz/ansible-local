@@ -6,8 +6,7 @@ install_package_list:
   - python-pip
   - strace
   - mlocate
-  - dos2unix
-  - grive
+#  - grive
 
 virt_packages:
   - linux-generic
@@ -29,7 +28,6 @@ debian_x_package_list:
   - chromium-browser
   - adobe-flashplugin
   - mate-terminal
-  - pepperflashplugin-nonfree
 
 redhat_package_list:
   - gitflow
@@ -54,6 +52,8 @@ install_pip_list:
 debian_pip_list:
 
 redhat_pip_list:
+  - ipcluster_tools
+  - ipython-cluster-helper
 
 update_package_list:
   - gmp
@@ -73,5 +73,3 @@ vim_plugin_git_urls:
                 url:  https://github.com/scrooloose/nerdtree.git
         fugitive:
                 url: git://github.com/tpope/vim-fugitive.git
-        vim-colors-solarized:
-                url: git://github.com/altercation/vim-colors-solarized.git
