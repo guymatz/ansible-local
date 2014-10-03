@@ -9,15 +9,15 @@
 - name: Get VBox version for installing extension pack
   command: /usr/bin/VBoxManage --version
   register: vbox_ver
-  when: vbox_install|changed
   changed_when: False
+  #when: vbox_install|changed
 
 - name: Set major/minor number of vbox release
   set_fact: 
     vbox_ver_maj: "{{ vbox_ver.stdout | regex_replace('^(.*)_.*$','\\\\1') }}"
     vbox_ver_min: "{{ vbox_ver.stdout | regex_replace('^.*_.*r([0-9]*)$','\\\\1') }}"
   changed_when: False
-  when: vbox_install|changed
+#  when: vbox_install|changed
 
 - name: Set filename of vbox release
   set_fact: 
