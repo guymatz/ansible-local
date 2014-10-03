@@ -1,6 +1,4 @@
 ---
-- name: Add HipChat repo
-  copy: src=hipchat.repo dest=/etc/yum.repos.d/hipchat.repo
 
 - name: Add RepoForge repo key
   command: rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt creates=/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag
@@ -10,7 +8,7 @@
   yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
   when: repoforge_key|changed
 
-- name: Add rpmfusino-free repo
+- name: Add rpmfusion-free repo
   yum: name=http://download1.rpmfusion.org/free/el/updates/6/i386/rpmfusion-free-release-6-1.noarch.rpm
 
 - name: Add rpmfusion-nonfree repo
@@ -34,3 +32,23 @@
 - name: Install Redhat PIPs
   pip: name={{ item }} state=present
   with_items: redhat_pip_list
+
+- name: Check for X
+  command: rpm -qi x11-common
+  failed_when: False
+  changed_when: False
+  register: xoutput
+
+- name: Add HipChat repo
+  copy: src=hipchat.repo dest=/etc/yum.repos.d/hipchat.repo
+  when: xoutput|success
+
+- name: Install Common X packages
+  yum: name={{ item }} state=present
+  with_items: install_x_package_list
+  when: xoutput|success
+
+- name: Install Redhat X packages
+  yum: name={{ item }} state=present
+  with_items: redhat_x_package_list
+  when: xoutput|success

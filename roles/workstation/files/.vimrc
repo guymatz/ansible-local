@@ -4,7 +4,7 @@ syntax on
 filetype plugin indent on
 
 "Open NERDTree on startup
-autocmd VimEnter * NERDTree
+"autocmd VimEnter * NERDTree
 
 "When primary window and nerdtree is open, quit"
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -18,7 +18,7 @@ nnoremap <Leader>c :set cursorline!<CR>
 syntax on
 set nocompatible
 set background=light
-colorscheme solarized
+"colorscheme solarized
 "set guifont=Menlo\ Regular:h17
 set number
 set ts=8

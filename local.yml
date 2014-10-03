@@ -1,4 +1,5 @@
 ---
+
 - hosts: localhost
   sudo: True
   roles:

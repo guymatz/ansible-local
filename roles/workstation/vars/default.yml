@@ -1,2 +1,3 @@
 ---
 # vars file for workstation
+sudo_group: 'wheel'

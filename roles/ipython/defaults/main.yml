@@ -1,6 +1,8 @@
 ---
 # defaults file for workstation
 install_package_list:
+  - StarCluster
+  - StarCluster-doc
 
 install_x_package_list:
   -

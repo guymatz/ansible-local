@@ -6,45 +6,75 @@
     - name: Create security group
       local_action:
         module: ec2_group
-        name: ep2
-        description: Access to the Episode2 servers
-        region: us-west-2
+        name: '{{ group_name }}'
+        vpc_id: "{{ vpc_id }}"
+        description: Access to Cluster 1
+        region: "{{ region }}"
         rules:
           - proto: tcp
             from_port: 22
             to_port: 22
             cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
 
     - name: Launch instances
       local_action:
         module: ec2
-        region: us-west-2
-        keypair: answersforaws
-        group: ep2
-        instance_type: m1.small
-        image: ami-8635a9b6
+        region: "{{ region }}"
+        keypair: "{{ keypair }}"
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        group: '{{ group_name }}'
+        instance_type: '{{ instance_type }}'
+        image: '{{ ami_id }}'
+        count: 1
+        assign_public_ip: true
+        wait: yes
+      register: ec2
+
+    - name: Add Controller instance to host group
+      local_action: add_host hostname={{ item.public_ip }} groupname={{ group_name }}
+      with_items: ec2.instances
+
+    - name: Add tag to instances
+      local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
+      with_items: ec2.instances
+      args:
+        tags:
+          Name: ipyc1
+          ipython: controller
+
+    - name: Launch Engine instances
+      local_action:
+        module: ec2
+        region: '{{ region }}'
+        vpc_subnet_id: '{{ vpc_subnet_id }}'
+        keypair: '{{ keypair }}'
+        group: '{{ group_name }}'
+        instance_type: '{{ instance_type }}'
+        image: '{{ ami_id }}'
+        assign_public_ip: true
         count: 2
         wait: yes
       register: ec2
 
-    - name: Add EP2 instances to host group
-      local_action: add_host hostname={{ item.public_ip }} groupname=ep2
+    - name: Add Engine instances to host group
+      local_action: add_host hostname={{ item.public_ip }} groupname={{ group_name }}
       with_items: ec2.instances
 
     - name: Add tag to instances
-      local_action: ec2_tag resource={{ item.id }} region=us-west-2 state=present
+      local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
       with_items: ec2.instances
       args:
         tags:
-          Name: EP2
+          Name: ipye
+          ipy_type: engine
+
 
     - name: Wait for SSH to be available
       pause: minutes=1
 
 
-##@#- name: Configure provisioned servers
-##@#  hosts: ep2
-##@#  user: ubuntu
-##@#  sudo: True
-##@#  tasks:
-##@#    - include: tasks/install-awscli.yml
+- include: ipython.yml
