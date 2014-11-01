@@ -19,6 +19,8 @@ virt_packages:
 
 install_x_package_list:
   - vim-gtk
+
+optional_x_package_list:
   - shutter
   - hipchat
 
@@ -28,7 +30,7 @@ debian_package_list:
 
 debian_x_package_list:
   - chromium-browser
-  - adobe-flashplugin
+  - flashplugin-installer
   - mate-terminal
   - pepperflashplugin-nonfree
 
@@ -61,9 +63,6 @@ update_package_list:
 
 byobu_line: '[ -r /home/ec2-user/byobu/prompt ] && . /home/ec2-user/.byobu/prompt   #byobu-prompt#'
 
-alternatives:
-  -
-
 debian_alternatives:
   - {cmd: 'editor', alt: '/usr/bin/vi'}
 
@@ -79,6 +78,8 @@ vim_plugin_git_urls:
         url: git://github.com/tpope/vim-fugitive.git
     vim-colors-solarized:
         url: git://github.com/altercation/vim-colors-solarized.git
+    vim-ansible-yaml:
+        url: git://github.com/chase/vim-ansible-yaml.git
 
 vim_color_urls:
     grb256:
