@@ -119,10 +119,6 @@
   sudo_user: gmatz
   changed_when: False
 
-#- name: set common alternatives
-#  alternatives: name={{ item.cmd }} path={{ item.alt }}
-#  with_items: alternatives
-
 #- name: VIM dir
 #  sudo_user: gmatz
 #  file: path=~/.vim state=directory recurse=yes
@@ -132,3 +128,10 @@
 
 - include: virtual.yml
   when: ansible_virtualization_role == 'host'
+
+- include: desktop.yml
+  when: ansible_hostname == 'desktop'
+
+- name: set common alternatives
+  alternatives: name={{ item.cmd }} path={{ item.alt }}
+  with_items: alternatives

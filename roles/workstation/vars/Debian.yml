@@ -1,1 +1,15 @@
 sudo_group: 'sudo'
+
+desktop_packages:
+    - xfce4
+    - xfce4-goodies
+    - tightvncserver
+
+alternatives:
+    - {cmd: 'editor', alt: '/usr/bin/vi'}
+
+debian_x_alternatives:
+    - {cmd: 'gnome-www-browser', alt: '/usr/bin/chromium-browser'}
+    - {cmd: 'x-www-browser', alt: '/usr/bin/chromium-browser'}
+    - {cmd: 'vncserver', alt: '/usr/bin/tightvncserver'}
+    - {cmd: 'vncpasswd', alt: '/usr/bin/tightvncpasswd'}
