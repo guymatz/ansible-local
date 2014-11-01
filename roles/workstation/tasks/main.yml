@@ -6,8 +6,9 @@
         - 'default.yml'
       paths: '../vars'
 
+# Change this for current work domain
 - name: Check if we're at work
-  command:  grep mdsol /etc/resolv.conf
+  command:  grep CHANGEME /etc/resolv.conf
   changed_when: False
   failed_when: False
   register: at_work
@@ -30,17 +31,27 @@
 ##@#    line='HOSTNAME=localhost.localdomain'
 ##@#    regexp="^HOSTNAME=localhost.localdomain$"
 
+- name: Check for github ssh hostkey 
+  command: grep github.com /etc/ssh/ssh_known_hosts
+  changed_when: false
+  failed_when: false
+  register: github_sshkey
+
+- name: Grab github.com ssh key
+  command: ssh-keyscan github.com >> /etc/ssh/ssh_known_hosts
+  when: github_sshkey|failed
+
 # tasks file for workstation
 - name: Create user gmatz
-  user: name=gmatz state=present groups={{ sudo_group }}
+  user: name=gmatz state=present groups={{ sudo_group }} shell='/bin/bash'
 
 - name: Uncomment wheel line in sudo file on RedHat
-  lineinfile: "dest=/etc/sudoers state=present regexp='^%wheel.*NOPASSWD.*' line='%wheel ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
+  lineinfile: "dest=/etc/sudoers state=present regexp='%{{ sudo_group }}.*' line='%{{ sudo_group }} ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
   when: ansible_os_family == 'RedHat'
 
 
-- name: Uncomment wheel line in sudo file on Debian
-  lineinfile: "dest=/etc/sudoers state=present regexp='%sudo   ALL=(ALL:ALL) ALL' line='%sudo ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
+- name: Uncomment sudo line in sudo file on Debian
+  lineinfile: "dest=/etc/sudoers state=present regexp='%{{ sudo_group }}.*' line='%{{ sudo_group }} ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
   when: ansible_os_family == 'Debian'
 
 - name: Set up authorized_keys for gmatz
