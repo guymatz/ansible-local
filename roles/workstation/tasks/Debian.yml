@@ -26,22 +26,30 @@
   changed_when: False
   register: xoutput
 
-- name: Install Common X packages
-  apt: name={{ item }} state=present
-  with_items: install_x_package_list
-  when: xoutput|success 
-
-- name: Install Debian X packages
-  apt: name={{ item }} state=present force=yes
-  with_items: debian_x_package_list
-  when: xoutput|success 
-
 - name: Add HipChat repo
   apt_repository: repo='deb http://downloads.hipchat.com/linux/apt stable main' state=present
   when: xoutput|success 
 
 - name: Add HipChat repo key
   apt_key: url='https://www.hipchat.com/keys/hipchat-linux.key' state=present
+  when: xoutput|success 
+  register: repo_added
+
+
+- name: Install Common X packages
+  apt: name={{ item }} state=present
+  with_items: install_x_package_list
+  when: xoutput|success 
+
+- name: Install Debian X packages
+  apt: name={{ item }} state=present
+  with_items: debian_x_package_list
+  when: xoutput|success 
+
+- name: Install highly optional Debian X packages
+  apt: name={{ item }} state=present force=yes
+  with_items: optional_x_package_list
+  failed_when: false
   when: xoutput|success 
 
 - name: Install uniquely-named packages
