@@ -8,6 +8,7 @@ install_package_list:
   - mlocate
   - dos2unix
   - grive
+  - unzip
 
 virt_packages:
   - linux-generic
