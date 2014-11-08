@@ -4,6 +4,9 @@ desktop_packages:
     - xfce4
     - xfce4-goodies
     - tightvncserver
+    - mate-desktop-environment
+    - mate-desktop-environment-core
+    - mate-desktop-environment-extras
 
 alternatives:
     - {cmd: 'editor', alt: '/usr/bin/vi'}
