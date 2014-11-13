@@ -1,0 +1,14 @@
+---
+# tasks file for pycharm
+- name: download pycharm edu version
+  get_url: url={{ pycharm_url }} dest=/var/tmp
+
+- name: untar pycharm
+  unarchive:  >
+    src=/var/tmp/{{ pycharm_tar }}
+    dest=/opt
+    copy=no
+    creates=/opt/pycharm-edu-{{ pycharm_version }}
+
+- name: create link to pycharm
+  file: state=link src=/opt/pycharm-edu-{{ pycharm_version }} dest=/opt/pycharm

@@ -1,0 +1,5 @@
+---
+# defaults file for python
+pip_version: "1.5.4-1"
+python_development: True
+#virtualenv_version: 1.11.6
