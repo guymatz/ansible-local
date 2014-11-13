@@ -11,7 +11,7 @@
   with_items: desktop_packages
 
 - name: vnc dir
-  file: path=$HOME/.vnc state=directory
+  file: path="~/.vnc" state=directory
   sudo_user: gmatz
 
 - name: passwd file
