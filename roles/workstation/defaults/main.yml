@@ -27,6 +27,7 @@ optional_x_package_list:
 debian_package_list:
   - git-flow
   - aptitude
+  - openjdk-7-jdk
 
 debian_x_package_list:
   - chromium-browser
@@ -96,3 +97,5 @@ vim_color_urls:
         url: https://github.com/tpope/vim-vividchalk/raw/master/colors/vividchalk.vim
     candy:
         url: http://www.vim.org/scripts/download_script.php?src_id=817
+    colour-sampler-pack:
+        url: https://github.com/vim-scripts/Colour-Sampler-Pack.git
