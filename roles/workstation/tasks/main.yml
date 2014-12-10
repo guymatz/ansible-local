@@ -38,7 +38,7 @@
   register: github_sshkey
 
 - name: Grab github.com ssh key
-  command: ssh-keyscan github.com >> /etc/ssh/ssh_known_hosts
+  command: ssh-keyscan www.github.com >> /etc/ssh/ssh_known_hosts
   when: github_sshkey|failed
 
 # tasks file for workstation

@@ -23,10 +23,14 @@
   set_fact: 
     vbox_ext_file: Oracle_VM_VirtualBox_Extension_Pack-{{ vbox_ver_maj }}-{{ vbox_ver_min  }}.vbox-extpack
 
+- name: Check if Extension pack is installed
+  command: /usr/bin/VBoxManage list extpacks
+  register: vbox_ext_out
+
 - name: Grab ext pack
   get_url: url='http://download.virtualbox.org/virtualbox/{{ vbox_ver_maj }}/{{ vbox_ext_file }}' dest=/var/tmp/{{ vbox_ext_file }}
-  when: vbox_install|changed
+  when: '"{{ vbox_ver_maj }}" not in "{{ vbox_ext_out.stdout }}"'
 
 - name: Setup vbox extension pack
-  command: /usr/bin/VBoxManage extpack install /var/tmp/Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
-  when: vbox_install|changed
+  command: /usr/bin/VBoxManage extpack install /var/tmp/Oracle_VM_VirtualBox_Extension_Pack-{{ vbox_ver_maj }}-{{ vbox_ver_min  }}.vbox-extpack
+  when: '"{{ vbox_ver_maj }}" not in "{{ vbox_ext_out.stdout }}"'

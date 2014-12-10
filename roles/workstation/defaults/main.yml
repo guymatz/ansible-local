@@ -19,6 +19,7 @@ virt_packages:
 
 install_x_package_list:
   - vim-gtk
+  - tightvncserver
 
 optional_x_package_list:
   - shutter
