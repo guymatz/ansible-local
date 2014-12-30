@@ -26,6 +26,7 @@
 - name: Check if Extension pack is installed
   command: /usr/bin/VBoxManage list extpacks
   register: vbox_ext_out
+  changed_when: False
 
 - name: Grab ext pack
   get_url: url='http://download.virtualbox.org/virtualbox/{{ vbox_ver_maj }}/{{ vbox_ext_file }}' dest=/var/tmp/{{ vbox_ext_file }}
