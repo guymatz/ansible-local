@@ -36,3 +36,7 @@ hi CursorLine cterm=NONE ctermbg=yellow ctermfg=black guibg=#cb4b16 guifg=white
 
 call pathogen#infect()
 call pathogen#helptags()
+
+"
+" for ctrl-p
+set runtimepath^=~/.vim/bundle/ctrlp.vim
