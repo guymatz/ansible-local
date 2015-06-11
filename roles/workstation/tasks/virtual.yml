@@ -5,12 +5,14 @@
   with_items: virt_packages
   register: vbox_install
   notify: start vbox
+  tags: virtual
 
 - name: Get VBox version for installing extension pack
   command: /usr/bin/VBoxManage --version
   register: vbox_ver
   changed_when: False
   #when: vbox_install|changed
+  tags: virtual
 
 - name: Set major/minor number of vbox release
   set_fact: 
@@ -18,20 +20,25 @@
     vbox_ver_min: "{{ vbox_ver.stdout | regex_replace('^.*_.*r([0-9]*)$','\\\\1') }}"
   changed_when: False
 #  when: vbox_install|changed
+  tags: virtual
 
 - name: Set filename of vbox release
   set_fact: 
     vbox_ext_file: Oracle_VM_VirtualBox_Extension_Pack-{{ vbox_ver_maj }}-{{ vbox_ver_min  }}.vbox-extpack
+  tags: virtual
 
 - name: Check if Extension pack is installed
   command: /usr/bin/VBoxManage list extpacks
   register: vbox_ext_out
   changed_when: False
+  tags: virtual
 
 - name: Grab ext pack
   get_url: url='http://download.virtualbox.org/virtualbox/{{ vbox_ver_maj }}/{{ vbox_ext_file }}' dest=/var/tmp/{{ vbox_ext_file }}
-  when: '"{{ vbox_ver_maj }}" not in "{{ vbox_ext_out.stdout }}"'
+  #when: '"{{ vbox_ver_maj }}" not in "{{ vbox_ext_out.stdout }}"'
+  tags: virtual
 
 - name: Setup vbox extension pack
   command: /usr/bin/VBoxManage extpack install /var/tmp/Oracle_VM_VirtualBox_Extension_Pack-{{ vbox_ver_maj }}-{{ vbox_ver_min  }}.vbox-extpack
   when: '"{{ vbox_ver_maj }}" not in "{{ vbox_ext_out.stdout }}"'
+  tags: virtual

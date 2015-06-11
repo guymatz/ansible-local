@@ -61,12 +61,12 @@
   when: cache_updated|changed
 
 - name: Download Sublime Text 3
-  get_url: url=http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_amd64.deb
-           dest=/var/cache/apt/archives/sublime-text_build-3065_amd64.deb
+  get_url: url=http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3083_amd64.deb
+           dest=/var/cache/apt/archives/sublime-text_build-3083_amd64.deb
   when: xoutput|success 
 
 - name: Install Sublime Text 3
-  apt: deb=/var/cache/apt/archives/sublime-text_build-3065_amd64.deb
+  apt: deb=/var/cache/apt/archives/sublime-text_build-3083_amd64.deb
   when: xoutput|success 
 
 - name: set Debian alternatives
@@ -78,10 +78,10 @@
   when: xoutput|success 
   with_items: debian_x_alternatives
 
-- name: Add earch path to resolver
-  lineinfile: dest=/etc/resolvconf/resolv.conf.d/base regexp='^search' line='search q.rtrdc.net p.rtrdc.net prod.renttherunway.it'
-  register: resolv
-
-- name: Update resolv.conf
-  command: /sbin/resolvconf -u
-  when: resolv|changed
+#- name: Add earch path to resolver
+#  lineinfile: dest=/etc/resolvconf/resolv.conf.d/base regexp='^search' line='search q.rtrdc.net p.rtrdc.net prod.renttherunway.it'
+#  register: resolv
+#
+#- name: Update resolv.conf
+#  command: /sbin/resolvconf -u
+#  when: resolv|changed

@@ -6,17 +6,17 @@
         - 'default.yml'
       paths: '../vars'
 
-# Change this for current work domain
-- name: Check if we're at work
-  command:  grep CHANGEME /etc/resolv.conf
-  changed_when: False
-  failed_when: False
-  register: at_work
-
-- name: Set work
-  set_fact: at_work=True
-  changed_when: False
-  when: at_work
+## Change this for current work domain
+#- name: Check if we're at work
+#  command:  grep CHANGEME /etc/resolv.conf
+#  changed_when: False
+#  failed_when: False
+#  register: at_work
+#
+#- name: Set work
+#  set_fact: at_work=True
+#  changed_when: False
+#  when: at_work
 
 #- debug: msg='at_work {{ at_work|to_nice_json }}'
 
@@ -37,9 +37,9 @@
   failed_when: false
   register: github_sshkey
 
-- name: Grab github.com ssh key
-  command: ssh-keyscan www.github.com >> /etc/ssh/ssh_known_hosts
-  when: github_sshkey|failed
+#- name: Grab github.com ssh key
+#  command: ssh-keyscan www.github.com >> /etc/ssh/ssh_known_hosts
+#  when: github_sshkey|failed
 
 # tasks file for workstation
 - name: Create user gmatz
@@ -75,9 +75,9 @@
 ##@#  with_items: install_pip_list
 
 - name: Install byobu launcher
+  command: "/usr/bin/byobu-launcher-install"
   sudo_user: gmatz
   sudo: yes
-  command: byobu-launcher-install
   changed_when: False
 
 - name: Enable vi mode in .rc files
@@ -104,13 +104,13 @@
 - name: Enable byobu in .bashrc files
   lineinfile:
     dest=~gmatz/.bashrc
-    line='{{ byobu_line }}'
+    line="{{ byobu_line }}"
     regexp="byobu-prompt"
     insertafter=EOF
     create=yes
 
 - name: Setup up git email
-  command: /usr/bin/git config --global user.email "gmatz@mdsol.com"
+  command: /usr/bin/git config --global user.email "gmatz@jcrew.com"
   sudo_user: gmatz
   changed_when: False
 
@@ -119,10 +119,10 @@
   sudo_user: gmatz
   changed_when: False
 
-#- name: VIM dir
-#  sudo_user: gmatz
-#  file: path=~/.vim state=directory recurse=yes
-#        owner=gmatz group=gmatz
+- name: VIM dir
+  sudo_user: gmatz
+  file: path=~/.vim state=directory recurse=yes
+        owner=gmatz group=gmatz
 
 - include: vim.yml
 

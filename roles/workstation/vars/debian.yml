@@ -72,4 +72,4 @@ vim_plugin_git_urls:
         nerdtree:
                 url:  https://github.com/scrooloose/nerdtree.git
         fugitive:
-                url: git://github.com/tpope/vim-fugitive.git
+                url: htp://github.com/tpope/vim-fugitive.git

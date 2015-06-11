@@ -4,3 +4,5 @@
   sudo: True
   roles:
     - workstation
+    - python
+    - ruby

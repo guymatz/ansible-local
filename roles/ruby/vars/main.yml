@@ -1,0 +1,9 @@
+# docs.ansible.com/playbooks_variables.html
+
+ruby_packages:
+  - ruby
+  - ruby-dev
+  - bundler
+
+ruby_gems:
+  - nokogiri
