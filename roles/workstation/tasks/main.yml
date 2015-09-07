@@ -75,10 +75,11 @@
 ##@#  with_items: install_pip_list
 
 - name: Install byobu launcher
-  command: "/usr/bin/byobu-launcher-install"
+  command: /usr/bin/byobu-launcher-install
   sudo_user: gmatz
   sudo: yes
-  changed_when: False
+  changed_when: false
+  failed_when: false
 
 - name: Enable vi mode in .rc files
   lineinfile:
