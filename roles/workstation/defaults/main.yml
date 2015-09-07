@@ -32,8 +32,8 @@ debian_package_list:
 debian_x_package_list:
   - chromium-browser
   - flashplugin-installer
-  - mate-terminal
   - pepperflashplugin-nonfree
+#  - mate-terminal
 
 redhat_package_list:
   - gitflow
