@@ -9,3 +9,4 @@
   sudo: True
   roles:
     - workstation
+    - flask
