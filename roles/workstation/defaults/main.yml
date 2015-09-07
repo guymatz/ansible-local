@@ -19,6 +19,7 @@ virt_packages:
 
 install_x_package_list:
   - vim-gtk
+  - tightvncserver
 
 optional_x_package_list:
   - shutter
@@ -28,6 +29,13 @@ debian_package_list:
   - git-flow
   - aptitude
   - openjdk-7-jdk
+  - build-essential
+  - zlibc
+  - zlib1g-dev
+  - samba
+  - cifs-utils
+  - dconf-tools
+  - dconf-cli
 
 debian_x_package_list:
   - chromium-browser
@@ -74,13 +82,15 @@ debian_x_alternatives:
 
 vim_plugin_git_urls:
     nerdtree:
-        url:  https://github.com/scrooloose/nerdtree.git
+        url: https://github.com/scrooloose/nerdtree.git
     fugitive:
-        url: git://github.com/tpope/vim-fugitive.git
+        url: http://github.com/tpope/vim-fugitive.git
     vim-colors-solarized:
-        url: git://github.com/altercation/vim-colors-solarized.git
+        url: http://github.com/altercation/vim-colors-solarized.git
     vim-ansible-yaml:
-        url: git://github.com/chase/vim-ansible-yaml.git
+        url: http://github.com/chase/vim-ansible-yaml.git
+    ctrlp.vim:
+        url: http://github.com/kien/ctrlp.vim.git
 
 vim_color_urls:
     grb256:

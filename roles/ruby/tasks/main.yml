@@ -1,0 +1,9 @@
+# http://docs.ansible.com/playbooks_intro.html#tasks-list
+
+- name: install ruby
+  apt: name={{ item }} state=present
+  with_items: ruby_packages
+
+- name: install gems
+  gem: name={{ item }} state=present
+  with_items: ruby_gems
