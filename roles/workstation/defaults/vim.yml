@@ -25,3 +25,5 @@ vim_color_urls:
         url: https://github.com/tpope/vim-vividchalk/raw/master/colors/vividchalk.vim
     candy:
         url: http://www.vim.org/scripts/download_script.php?src_id=817
+    zenburn:
+        url: http://github.com/jnurmine/Zenburn.git

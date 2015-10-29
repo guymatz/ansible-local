@@ -9,6 +9,7 @@ install_package_list:
   - dos2unix
   - grive
   - unzip
+  - traceroute
 
 virt_packages:
   - linux-generic
@@ -36,6 +37,7 @@ debian_package_list:
   - cifs-utils
   - dconf-tools
   - dconf-cli
+  - libnss3-tools
 
 debian_x_package_list:
   - chromium-browser
@@ -109,3 +111,5 @@ vim_color_urls:
         url: http://www.vim.org/scripts/download_script.php?src_id=817
     colour-sampler-pack:
         url: https://github.com/vim-scripts/Colour-Sampler-Pack.git
+    zenburn:
+        url: http://github.com/jnurmine/Zenburn.git

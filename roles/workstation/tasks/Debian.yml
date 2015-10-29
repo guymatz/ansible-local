@@ -55,6 +55,8 @@
 - name: Install uniquely-named packages
   apt: name={{ item }} state=present force=yes
   with_items: debian_package_list
+  tags:
+    - now
 
 - name: Upgrade packages
   apt: upgrade=safe

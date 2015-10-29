@@ -18,7 +18,12 @@ nnoremap <Leader>c :set cursorline!<CR>
 syntax on
 set nocompatible
 set background=light
-"colorscheme solarized
+if has('gui_running')
+  set background=dark
+  colorscheme solarized
+else
+  colorscheme Zenburn
+endif
 "set guifont=Menlo\ Regular:h17
 set number
 set ts=8
