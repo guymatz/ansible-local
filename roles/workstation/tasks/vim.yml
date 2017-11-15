@@ -4,6 +4,8 @@
   copy: src=.vimrc dest=~
         owner=gmatz group=gmatz
   become_user: gmatz
+  tags:
+    - vim
 
 - name: VIM plugins setup
   become_user: gmatz
@@ -13,15 +15,23 @@
     - autoload
     - bundle
     - colors
+  tags:
+    - vim
 
 - name: VIM Pathogen install
-  get_url: url=https://tpo.pe/pathogen.vim dest=~/.vim/autoload/pathogen.vim 
+  get_url:
+      url: https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+      dest: ~/.vim/autoload/pathogen.vim 
   become_user: gmatz
+  tags:
+    - vim
 
 - name: VIM plugin install via git
   git: repo={{ item.value.url }} dest=~/.vim/bundle/{{ item.key }} #accept_hostkey=yes
   become_user: gmatz
   with_dict:  "{{ vim_plugin_git_urls }}"
+  tags:
+    - vim
 
 ##@#- name: VIM plugin install via pathogen
 ##@#  get_url: url={{ item }} dest=~/.vim/autoload/pathogen.vim 
@@ -29,8 +39,12 @@
 ##@#  with_items:  "{{ plugin_urls }}"
 - name: Make vim colors dir
   file: state=directory dest=~/.vim/colors mode=0750
+  tags:
+    - vim
 
 - name: Install color schemes
-  get_url: url={{ item.value.url }} dest=~/.vim/{{ item.key }}.vim
+  get_url: url={{ item.value.url }} dest=~/.vim/colors/{{ item.key }}.vim
   become_user: gmatz
   with_dict: "{{ vim_color_urls }}"
+  tags:
+    - vim

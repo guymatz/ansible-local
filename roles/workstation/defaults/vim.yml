@@ -26,4 +26,4 @@ vim_color_urls:
     candy:
         url: http://www.vim.org/scripts/download_script.php?src_id=817
     zenburn:
-        url: http://github.com/jnurmine/Zenburn.git
+        url: https://raw.githubusercontent.com/jnurmine/Zenburn/master/colors/zenburn.vim

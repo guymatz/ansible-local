@@ -6,6 +6,7 @@ install_package_list:
   - python-pip
   - strace
   - mlocate
+  - jq
 #  - grive
 
 virt_packages:
@@ -21,13 +22,14 @@ install_x_package_list:
   - hipchat
 
 debian_package_list:
+  - build-essential
   - git-flow
   - aptitude
 
 debian_x_package_list:
   - chromium-browser
   - adobe-flashplugin
-  - mate-terminal
+  #  - mate-terminal
 
 redhat_package_list:
   - gitflow

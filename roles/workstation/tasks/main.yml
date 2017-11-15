@@ -120,6 +120,11 @@
   become_user: gmatz
   changed_when: False
 
+- name: Setup up git push
+  command: /usr/bin/git config --global push.default simple
+  become_user: gmatz
+  changed_when: False
+
 - name: VIM dir
   become_user: gmatz
   file: path=~/.vim state=directory recurse=yes

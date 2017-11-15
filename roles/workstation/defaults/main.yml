@@ -10,6 +10,7 @@ install_package_list:
 #  - grive
   - unzip
   - traceroute
+  - jq
 
 virt_packages:
   - linux-generic
@@ -109,10 +110,10 @@ vim_color_urls:
         url: https://github.com/tpope/vim-vividchalk/raw/master/colors/vividchalk.vim
     candy:
         url: http://www.vim.org/scripts/download_script.php?src_id=817
-    colour-sampler-pack:
-        url: https://github.com/vim-scripts/Colour-Sampler-Pack.git
+#    colour-sampler-pack:
+#        url: https://github.com/vim-scripts/Colour-Sampler-Pack.git
     zenburn:
-        url: http://github.com/jnurmine/Zenburn.git
+        url: https://raw.githubusercontent.com/jnurmine/Zenburn/master/colors/zenburn.vim
 
 atom_plugins:
   - ansible-snippets

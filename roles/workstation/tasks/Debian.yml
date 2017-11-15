@@ -67,22 +67,34 @@
     url: 'https://github.com/atom/atom/releases/latest'
   register: atom_html
 
+- name: set fact to version number
+  set_fact:
+    atom_version: "{{ atom_html['url']|regex_replace('^.*/', '') }}"
+
 - name: what's the atom version
   debug: var=atom_version
 
 - name: Download Atom
-  get_url: url=https://github.com/atom/atom/releases/download/v1.22.0/atom-amd64.deb
-           dest=/var/cache/apt/archives/atom-amd64.deb
+  get_url:
+    url: "https://github.com/atom/atom/releases/download/{{ atom_version }}/atom-amd64.deb"
+    dest: /var/cache/apt/archives/atom-amd64.deb
   when: xoutput|success 
 
 - name: Install Atom
   apt: deb=/var/cache/apt/archives/atom-amd64.deb
   when: xoutput|success 
 
-- name: Install Atom Plugins
-  command: "apm install {{ item }}"
-  with_items: "{{ atom_plugins }}"
-  when: xoutput|success 
+- name: Get installed atom plugins
+  command: apm list --json --installed --bare | jq '.user|.[]|.name'
+  changed_when: false
+  register: installed_atom_plugins
+
+#- name: Install Atom Plugins
+#  command: "apm install {{ item }}"
+#  with_items: "{{ atom_plugins }}"
+#  become: gmatz
+#  when: xoutput|success and item not in installed_atom_plugins['user']['name']
+#  FIX THIS WHEN
 
 - name: set Debian alternatives
   alternatives: name={{ item.cmd }} path={{ item.alt }}
