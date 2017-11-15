@@ -2,7 +2,7 @@
 
 - name: Install virtualbox and friends on metal
   apt: name={{ item }} state=present
-  with_items: virt_packages
+  with_items: "{{ virt_packages }}"
   register: vbox_install
   notify: start vbox
   tags: virtual

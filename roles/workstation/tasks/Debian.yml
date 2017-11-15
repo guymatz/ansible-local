@@ -9,7 +9,7 @@
 
 ##@#- name: Add PPAs
 ##@#  apt_repository: repo='{{ item }}' state=present
-##@#  with_items: debian_ppa_install
+##@#  with_items: "{{ debian_ppa_install }}"
 ##@#  register: debian_ppa
 
 ##@#- name: Update apt if necessary
@@ -18,7 +18,7 @@
 
 - name: Install Common packages
   apt: name={{ item }} state=present
-  with_items: install_package_list
+  with_items: "{{ install_package_list }}"
 
 - name: Check for X
   command: dpkg -s x11-common
@@ -38,23 +38,23 @@
 
 - name: Install Common X packages
   apt: name={{ item }} state=present
-  with_items: install_x_package_list
+  with_items: "{{ install_x_package_list }}"
   when: xoutput|success 
 
 - name: Install Debian X packages
   apt: name={{ item }} state=present
-  with_items: debian_x_package_list
+  with_items: "{{ debian_x_package_list }}"
   when: xoutput|success 
 
 - name: Install highly optional Debian X packages
   apt: name={{ item }} state=present force=yes
-  with_items: optional_x_package_list
+  with_items: "{{ optional_x_package_list }}"
   failed_when: false
   when: xoutput|success 
 
 - name: Install uniquely-named packages
   apt: name={{ item }} state=present force=yes
-  with_items: debian_package_list
+  with_items: "{{ debian_package_list }}"
   tags:
     - now
 
@@ -62,23 +62,36 @@
   apt: upgrade=safe
   when: cache_updated|changed
 
-- name: Download Sublime Text 3
-  get_url: url=http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3083_amd64.deb
-           dest=/var/cache/apt/archives/sublime-text_build-3083_amd64.deb
+- name: Get atom version
+  uri:
+    url: 'https://github.com/atom/atom/releases/latest'
+  register: atom_html
+
+- name: what's the atom version
+  debug: var=atom_version
+
+- name: Download Atom
+  get_url: url=https://github.com/atom/atom/releases/download/v1.22.0/atom-amd64.deb
+           dest=/var/cache/apt/archives/atom-amd64.deb
   when: xoutput|success 
 
-- name: Install Sublime Text 3
-  apt: deb=/var/cache/apt/archives/sublime-text_build-3083_amd64.deb
+- name: Install Atom
+  apt: deb=/var/cache/apt/archives/atom-amd64.deb
+  when: xoutput|success 
+
+- name: Install Atom Plugins
+  command: "apm install {{ item }}"
+  with_items: "{{ atom_plugins }}"
   when: xoutput|success 
 
 - name: set Debian alternatives
   alternatives: name={{ item.cmd }} path={{ item.alt }}
-  with_items: debian_alternatives
+  with_items: "{{ debian_alternatives }}"
 
 - name: set Debian X alternatives
   alternatives: name={{ item.cmd }} path={{ item.alt }}
   when: xoutput|success 
-  with_items: debian_x_alternatives
+  with_items: "{{ debian_x_alternatives }}"
 
 #- name: Add earch path to resolver
 #  lineinfile: dest=/etc/resolvconf/resolv.conf.d/base regexp='^search' line='search q.rtrdc.net p.rtrdc.net prod.renttherunway.it'

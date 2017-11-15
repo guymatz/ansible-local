@@ -12,5 +12,5 @@
 
 - name: Install PIP packages
   pip: name={{ item }} state=present executable=pip2.7
-  with_items: install_pip_list
+  with_items: "{{ install_pip_list }}"
   tags: ipython

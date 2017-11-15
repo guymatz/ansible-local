@@ -7,7 +7,7 @@ install_package_list:
   - strace
   - mlocate
   - dos2unix
-  - grive
+#  - grive
   - unzip
   - traceroute
 
@@ -29,7 +29,7 @@ optional_x_package_list:
 debian_package_list:
   - git-flow
   - aptitude
-  - openjdk-7-jdk
+  - openjdk-8-jdk
   - build-essential
   - zlibc
   - zlib1g-dev
@@ -113,3 +113,36 @@ vim_color_urls:
         url: https://github.com/vim-scripts/Colour-Sampler-Pack.git
     zenburn:
         url: http://github.com/jnurmine/Zenburn.git
+
+atom_plugins:
+  - ansible-snippets
+  - ansible-vault
+  - auto-detect-indentation
+  - autocomplete-ansible
+  - autocomplete-paths
+  - autoupdate-packages
+  - busy-signal
+  - file-icons
+  - git-plus
+  - highlight-selected
+  - intentions
+  - language-ansible
+  - language-shellscript
+  - language-terraform
+  - linter
+  - linter-ansible-linting
+  - linter-jsonlint
+  - linter-shellcheck
+  - linter-terraform-syntax
+  - linter-ui-default
+  - merge-conflicts
+  - minimap
+  - minimap-find-and-replace
+  - minimap-highlight-selected
+  - minimap-linter
+  - open-recent
+  #  - platformio-ide-terminal
+  - pretty-json
+  - project-manager
+  - terraform-fmt
+  - vim-mode-plus

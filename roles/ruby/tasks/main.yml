@@ -2,8 +2,8 @@
 
 - name: install ruby
   apt: name={{ item }} state=present
-  with_items: ruby_packages
+  with_items: "{{ ruby_packages }}"
 
 - name: install gems
   gem: name={{ item }} state=present
-  with_items: ruby_gems
+  with_items: "{{ ruby_gems }}"

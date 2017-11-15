@@ -4,7 +4,7 @@
 
 - name: Install Common packages
   apt: name={{ item }} state=present
-  with_items: install_package_list
+  with_items: "{{ install_package_list }}"
   when: install_package_list|length > 1
   tags: ipython
  
@@ -17,22 +17,22 @@
 
 - name: Install Common X packages
   apt: name={{ item }} state=present
-  with_items: install_x_package_list
+  with_items: "{{ install_x_package_list }}"
   when: xoutput|success 
   tags: ipython
 
 - name: Install Debian X packages
   apt: name={{ item }} state=present
-  with_items: debian_x_package_list
+  with_items: "{{ debian_x_package_list }}"
   when: xoutput|success 
   tags: ipython
 
 - name: Install uniquely-named packages
   apt: name={{ item }} state=present
-  with_items: debian_package_list
+  with_items: "{{ debian_package_list }}"
   tags: ipython
 
 - name: set Debian alternatives
   alternatives: name={{ item.cmd }} path={{ item.alt }}
-  with_items: debian_alternatives
+  with_items: "{{ debian_alternatives }}"
   tags: ipython

@@ -54,15 +54,15 @@
   lineinfile: "dest=/etc/sudoers state=present regexp='%{{ sudo_group }}.*' line='%{{ sudo_group }} ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
   when: ansible_os_family == 'Debian'
 
-- name: Set up authorized_keys for gmatz
-  authorized_key: user=gmatz
-                  key="{{ item }}"
-  with_file:
-    - public_keys/gmatz
+#- name: Set up authorized_keys for gmatz
+#  authorized_key: user=gmatz
+#                  key="{{ item }}"
+#  with_file:
+#    - public_keys/gmatz
 
 - name: configure ssh
   copy: src=config dest=~/.ssh/config mode=0600
-  sudo_user: gmatz
+  become_user: gmatz
 
 - include: Debian.yml
   when: ansible_os_family in ['Debian', 'Ubuntu','Peppermint', 'Linuxmint']
@@ -72,12 +72,12 @@
 
 ##@#- name: Install PIP packages
 ##@#  pip: name={{ item }} state=present
-##@#  with_items: install_pip_list
+##@#  with_items: "{{ install_pip_list }}"
 
 - name: Install byobu launcher
   command: /usr/bin/byobu-launcher-install
-  sudo_user: gmatz
-  sudo: yes
+  become_user: gmatz
+  become: yes
   changed_when: false
   failed_when: false
 
@@ -111,17 +111,17 @@
     create=yes
 
 - name: Setup up git email
-  command: /usr/bin/git config --global user.email "gmatz@jcrew.com"
-  sudo_user: gmatz
+  command: /usr/bin/git config --global user.email "{{ git_email }}"
+  become_user: gmatz
   changed_when: False
 
 - name: Setup up git email
   command: /usr/bin/git config --global user.name "Guy Matz"
-  sudo_user: gmatz
+  become_user: gmatz
   changed_when: False
 
 - name: VIM dir
-  sudo_user: gmatz
+  become_user: gmatz
   file: path=~/.vim state=directory recurse=yes
         owner=gmatz group=gmatz
 
@@ -135,4 +135,4 @@
 
 - name: set common alternatives
   alternatives: name={{ item.cmd }} path={{ item.alt }}
-  with_items: alternatives
+  with_items: "{{ alternatives }}"

@@ -1,7 +1,7 @@
 ---
 - name: Install IPython
   hosts: ipy
-  sudo: True
+  become: True
   roles:
     - workstation
     - python

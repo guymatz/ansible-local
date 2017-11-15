@@ -3,10 +3,10 @@
 - name: vimrc
   copy: src=.vimrc dest=~
         owner=gmatz group=gmatz
-  sudo_user: gmatz
+  become_user: gmatz
 
 - name: VIM plugins setup
-  sudo_user: gmatz
+  become_user: gmatz
   file: path=~/.vim/{{ item }} state=directory recurse=yes
         owner=gmatz group=gmatz
   with_items:
@@ -16,21 +16,21 @@
 
 - name: VIM Pathogen install
   get_url: url=https://tpo.pe/pathogen.vim dest=~/.vim/autoload/pathogen.vim 
-  sudo_user: gmatz
+  become_user: gmatz
 
 - name: VIM plugin install via git
   git: repo={{ item.value.url }} dest=~/.vim/bundle/{{ item.key }} #accept_hostkey=yes
-  sudo_user: gmatz
-  with_dict:  vim_plugin_git_urls
+  become_user: gmatz
+  with_dict:  "{{ vim_plugin_git_urls }}"
 
 ##@#- name: VIM plugin install via pathogen
 ##@#  get_url: url={{ item }} dest=~/.vim/autoload/pathogen.vim 
-##@#  sudo_user: gmatz
-##@#  with_items:  plugin_urls
+##@#  become_user: gmatz
+##@#  with_items:  "{{ plugin_urls }}"
 - name: Make vim colors dir
   file: state=directory dest=~/.vim/colors mode=0750
 
 - name: Install color schemes
   get_url: url={{ item.value.url }} dest=~/.vim/{{ item.key }}.vim
-  sudo_user: gmatz
-  with_dict: vim_color_urls
+  become_user: gmatz
+  with_dict: "{{ vim_color_urls }}"

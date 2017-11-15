@@ -8,18 +8,18 @@
 
 - name: install vnc, etc
   apt: name={{ item }} state=installed
-  with_items: desktop_packages
+  with_items: "{{ desktop_packages }}"
 
 - name: vnc dir
   file: path="~/.vnc" state=directory
-  sudo_user: gmatz
+  become_user: gmatz
 
 - name: passwd file
   copy: src=passwd dest=~gmatz/.vnc/passwd mode=0600 owner=gmatz
-  sudo_user: gmatz
+  become_user: gmatz
 
 - name: xstartup file
   copy: src=xstartup dest=~gmatz/.vnc/xstartup mode=0700 owner=gmatz
-  sudo_user: gmatz
+  become_user: gmatz
 
 # Finish setup with init script, etc.  from https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-14-04

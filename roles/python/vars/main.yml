@@ -2,5 +2,4 @@
 # vars file for python
 pip_packages:
   - virtualenv
-  - ansible
-  - sibl
+  #  - sibl

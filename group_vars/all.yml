@@ -5,3 +5,4 @@ region: us-west-2
 instance_type: t1.micro
 keypair: chromebook
 group_name: cluster1
+git_email: guy.matz@groupm.com

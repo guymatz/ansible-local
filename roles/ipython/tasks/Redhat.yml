@@ -6,17 +6,17 @@
 
 - name: Install common packages
   yum: name={{ item }} state=present
-  with_items: install_package_list
+  with_items: "{{ install_package_list }}"
   tags: ipython
   when: install_package_list|length > 1
 
 #- name: Update packages
 #  yum: name={{ item }} state=latest
-#  with_items: update_package_list
+#  with_items: "{{ update_package_list }}"
 
 - name: Install Redhat packages
   yum: name={{ item }} state=present
-  with_items: redhat_package_list
+  with_items: "{{ redhat_package_list }}"
   tags: ipython
 
 - name: Download pip27

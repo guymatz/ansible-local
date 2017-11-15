@@ -1,12 +1,12 @@
 ---
 
 - hosts: ubuntu_workstations
-  sudo: True
+  become: True
   roles:
     - workstation
 
 - hosts: localhost
-  sudo: True
+  become: True
   roles:
     - workstation
     - flask

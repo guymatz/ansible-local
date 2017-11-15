@@ -2,6 +2,9 @@ ServerAliveInterval 30
 ServerAliveCountMax 4
 StrictHostKeyChecking=no
 
+Host    github-gmatz.com
+    IdentityFile    ~/.ssh/chromebook
 
-HostName nyc*
-    User    JC\c9gmatz
+Host    *.jcrew.com nyc*
+    IdentityFile    ~/.ssh/jcrew
+    User            JC\c9gmatz
