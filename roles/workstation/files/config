@@ -4,6 +4,8 @@ StrictHostKeyChecking=no
 
 Host    github-gmatz.com
     IdentityFile    ~/.ssh/chromebook
+    HostName        github.com
+    User            git
 
 Host    *.jcrew.com nyc*
     IdentityFile    ~/.ssh/jcrew
