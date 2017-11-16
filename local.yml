@@ -5,4 +5,5 @@
   roles:
     - workstation
     - python
+    - pycharm
     - ruby

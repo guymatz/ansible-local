@@ -1,6 +1,7 @@
 ---
 # defaults file for pycharm
 
+
 pycharm_version: 1.0
 pycharm_tar: pycharm-educational-{{ pycharm_version }}.tar.gz
-pycharm_url: http://download.jetbrains.com/python/{{ pycharm_tar }}
+pycharm_url: https://data.services.jetbrains.com/products/download?code=PCC&platform=linux

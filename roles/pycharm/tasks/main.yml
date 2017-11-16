@@ -1,14 +1,51 @@
 ---
 # tasks file for pycharm
-- name: download pycharm edu version
-  get_url: url={{ pycharm_url }} dest=/var/tmp
+- name: download pycharm community - this URL should get the latest
+  get_url:
+    url: "{{ pycharm_url }}"
+    dest: /var/tmp/
+  register: pycharm_download
+  tags:
+    - pycharm
+
+- name: which pycharm file?
+  debug: var=pycharm_download['dest']
+  tags:
+    - pycharm
+
+- name: set pycharm_version
+  set_fact:
+    pycharm_version: "{{ pycharm_download['dest']|regex_replace('^.*/.*-(.*).tar.gz', '\\1')}}"
+  tags:
+    - pycharm
+
+- name: which pycharm version?
+  debug: var=pycharm_version
+  tags:
+    - pycharm
 
 - name: untar pycharm
-  unarchive:  >
-    src=/var/tmp/{{ pycharm_tar }}
-    dest=/opt
-    copy=no
-    creates=/opt/pycharm-edu-{{ pycharm_version }}
+  unarchive:
+    src: "{{ pycharm_download['dest'] }}"
+    dest: /opt
+    copy: no
+    creates: "/opt/pycharm-community-{{ pycharm_version }}"
+  when: pycharm_download|changed
+  tags:
+    - pycharm
 
-- name: create link to pycharm
-  file: state=link src=/opt/pycharm-edu-{{ pycharm_version }} dest=/opt/pycharm
+- name: create link to pycharm dir
+  file:
+    state: link
+    src: "/opt/pycharm-community-{{ pycharm_version }}"
+    dest: /opt/pycharm
+  tags:
+    - pycharm
+
+- name: create link to pycharm script
+  file:
+    state: link
+    src: /opt/pycharm/bin/pycharm.sh
+    dest: /usr/bin/pycharm
+  tags:
+    - pycharm
