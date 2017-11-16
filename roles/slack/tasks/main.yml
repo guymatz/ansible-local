@@ -1,0 +1,61 @@
+---
+- name: Include variables based on distro or family
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags:
+    - slack
+
+- name: Download HTML source for Slack download page
+  get_url:
+    url: "{{ slack_download_url }}"
+    dest: "{{ slack_html_src }}"
+    tmp_dest: "{{ slack_tmp_dir }}"
+  changed_when: false
+  tags:
+    - slack
+
+- name: Copy sed script
+  copy:
+    src: list_urls.sed
+    dest: "{{ slack_tmp_dir }}"
+    mode: 0700
+  tags:
+    - slack
+
+- name: Find latest package to download
+  shell: "{{ slack_tmp_dir }}/list_urls.sed {{ slack_html_src }} | grep '\\.{{ slack_package_format }}'| sort -u"
+  register: registered_download_url
+  changed_when: False
+  tags:
+    - slack
+
+- name: Check version of slack installed
+  shell: dpkg -s slack-desktop | grep Version | awk '{print $2}'
+  failed_when: false
+  changed_when: false
+  register: installed_version
+  tags:
+    - slack
+
+- name: what's the registered_download_url.stdout
+  debug: var=registered_download_url.stdout
+  tags:
+    - slack
+
+- name: what's the output here
+  debug: var=installed_version.stdout_lines
+  tags:
+    - slack
+
+- name: Download Slack
+  get_url:
+    url: "{{ registered_download_url.stdout }}"
+    dest: "{{ slack_package }}"
+    tmp_dest: "{{ slack_tmp_dir }}"
+  when: not installed_version.stdout_lines|first in registered_download_url.stdout
+  tags:
+    - slack
+
+- include: "{{ ansible_os_family }}.yml"
